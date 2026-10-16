@@ -14,12 +14,21 @@ the disk. It cannot reach the record.
 
 ## What Linux actually changes
 
-```
-macOS boot:   firmware → macOS → contacts Apple activation servers
-                                   → sees serial assigned → pulls MDM profile  ← management active
+```mermaid
+flowchart TD
+    subgraph M["macOS boot — management ACTIVE"]
+        direction LR
+        FW1["firmware"] --> MO["macOS"] --> AS["contacts Apple<br/>activation servers"] --> Pull["sees serial assigned<br/>→ pulls MDM profile"]
+    end
+    subgraph L["Linux boot — management DORMANT (record still exists)"]
+        direction LR
+        FW2["firmware"] --> LX["Linux<br/>(macOS never runs,<br/>so nobody asks Apple)"] --> Nope["no check-in<br/>→ no profile pulled"]
+    end
 
-Linux boot:   firmware → Linux (macOS never runs, so nobody asks Apple)        ← management DORMANT,
-                                                                                  record still exists
+    classDef active fill:#fde0e0,stroke:#c62828,color:#000;
+    classDef dormant fill:#fff6d1,stroke:#f9a825,color:#000;
+    class FW1,MO,AS,Pull active;
+    class FW2,LX,Nope dormant;
 ```
 
 macOS is the component that phones home and enrolls. Boot Linux instead and

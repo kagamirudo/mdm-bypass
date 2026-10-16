@@ -15,22 +15,35 @@ consequences of what's below.
 
 ## 1. The four parties
 
+```mermaid
+flowchart LR
+    Mac["🖥️ Your Mac<br/>(holds only the local<br/>enrollment profile)"]
+
+    subgraph Apple["☁️ Apple's servers"]
+        APNs["APNs<br/>(push / doorbell)"]
+        Act["Activation servers<br/>(Setup Assistant)"]
+        ABM["ABM / ASM ledger<br/>serial → org → MDM"]
+    end
+
+    MDM["🛠️ Org's MDM server<br/>Jamf · Intune · Mosyle · Kandji"]
+    Admin["👤 Administrator / org<br/>owns the ABM record"]
+
+    Mac <--> APNs
+    Mac <--> Act
+    ABM --> MDM
+    Admin --> ABM
+    Admin --> MDM
+    MDM <--> Mac
+
+    classDef yours fill:#d1f0d1,stroke:#2e7d32,color:#000;
+    classDef theirs fill:#fde0e0,stroke:#c62828,color:#000;
+    class Mac yours;
+    class APNs,Act,ABM,MDM,Admin theirs;
 ```
-   ┌─────────────┐        ┌──────────────────────┐        ┌──────────────┐
-   │  Your Mac   │        │  Apple's servers     │        │  The org's   │
-   │ (the device)│        │  • APNs (push)       │        │  MDM server  │
-   │             │        │  • Activation / ADE  │        │ (Jamf, Intune│
-   │             │        │  • ABM / ASM records │        │  Mosyle, …)  │
-   └─────────────┘        └──────────────────────┘        └──────────────┘
-          ▲                        ▲                              ▲
-          └──── the only part ─────┘                              │
-               you control                                        │
-                                                                  │
-          ┌───────────────────────────────────────────────────────┘
-          │  An administrator / organization that owns the ABM
-          │  record and runs the MDM server.
-          └──────────────────────────────────────────────────────
-```
+
+> Green = the only part you control. Everything red is held by Apple or the
+> organization — which is why wiping your disk (green) doesn't end the
+> relationship.
 
 1. **Your Mac** — holds a local *MDM enrollment profile* (a signed
    configuration file) and a device *identity certificate*.
@@ -57,21 +70,20 @@ can't. Apple's MDM protocol is **pull-based** and runs over plain HTTPS with
 XML property-list (plist) messages. The server never opens a connection to your
 device. The flow is:
 
-```
-  (1) Admin clicks "Lock device" / "Install app" in the MDM console
-        │
-        ▼
-  (2) MDM server → APNs:  "please poke device with push-token XYZ"
-        │                 (the push carries NO payload — just a wake-up)
-        ▼
-  (3) APNs → your Mac:    tiny notification over its persistent TLS
-                          connection (TCP 5223 to Apple's 17.0.0.0/8)
-        │
-        ▼
-  (4) Your Mac → MDM server (HTTPS, direct):
-                          "I'm awake, what do you have for me?"
-                          ← server returns the queued command (plist)
-                          → Mac executes it, posts the result back
+```mermaid
+sequenceDiagram
+    participant Admin as 👤 Admin console
+    participant MDM as 🛠️ MDM server
+    participant APNs as ☁️ APNs
+    participant Mac as 🖥️ Your Mac
+
+    Admin->>MDM: 1. "Lock device" / "Install app"
+    MDM->>APNs: 2. Poke push-token XYZ (no payload — just a wake-up)
+    APNs-->>Mac: 3. Tiny notification (persistent TLS, TCP 5223 → 17.0.0.0/8)
+    Mac->>MDM: 4. "I'm awake — what do you have for me?" (HTTPS, direct)
+    MDM-->>Mac: Queued command (plist)
+    Mac->>MDM: Executes it, posts result back
+    Note over APNs,Mac: APNs is only the doorbell.<br/>All real content flows Mac ↔ MDM directly.
 ```
 
 So APNs is just a **doorbell**. All the real content — profiles, commands, app
@@ -130,13 +142,17 @@ pre-assigned.
 - The on-disk profile is just a *copy* of a decision made in the cloud. Deleting
   the copy changes nothing about the decision.
 
-```
-   Serial number  ──(recorded in)──►  ABM/ASM  ──(assigned to)──►  MDM server
-        ▲                                                              │
-        │                                                              │
-   lives in your Mac's hardware;                     Setup Assistant pulls the
-   the same across OS wipes,                          enrollment back down every
-   Linux installs, firmware                           time the serial checks in
+```mermaid
+flowchart LR
+    Serial["🔑 Serial number<br/>in your Mac's hardware<br/><i>survives OS wipes,<br/>Linux installs, firmware</i>"]
+    ABM["📒 ABM / ASM<br/>ownership ledger"]
+    MDM["🛠️ Org's MDM server"]
+    Setup["⚙️ Setup Assistant<br/>pulls enrollment back down<br/>every time the serial checks in"]
+
+    Serial -->|recorded in| ABM
+    ABM -->|assigned to| MDM
+    Serial -.->|checks in on every boot/reinstall| Setup
+    Setup -.->|re-enrolls from| MDM
 ```
 
 **This is intentional.** ADE is also the anti-theft / fleet-ownership mechanism.

@@ -8,15 +8,25 @@ complete removal, because the enrollment doesn't live on the drive.
 
 ## Where the enrollment actually lives
 
+```mermaid
+flowchart LR
+    Serial["🔑 Your Mac's<br/>SERIAL NUMBER"]
+    Org["🏢 An organization in<br/>Apple Business Manager (ABM)<br/>/ Apple School Manager (ASM)"]
+    MDM["🛠️ That org's MDM server<br/>Jamf · Intune · Mosyle ·<br/>Kandji · Profile Manager"]
+    Disk["💽 Your disk<br/>(just a <i>copy</i> of the profile)"]
+
+    Serial -->|assigned to| Org
+    Org -->|managed by| MDM
+    MDM -.->|pushes a local copy to| Disk
+
+    classDef cloud fill:#fde0e0,stroke:#c62828,color:#000;
+    classDef local fill:#d1f0d1,stroke:#2e7d32,color:#000;
+    class Serial,Org,MDM cloud;
+    class Disk local;
 ```
-   Your Mac's SERIAL NUMBER  ──assigned to──►  an Organization in
-                                                Apple Business Manager (ABM)
-                                                / Apple School Manager (ASM)
-                                                        │
-                                                        ▼
-                                          that org's MDM server (Jamf, Intune,
-                                          Mosyle, Kandji, Profile Manager, …)
-```
+
+> Red lives in Apple's cloud and the org — an erase can't touch it. Green (the
+> local copy on your disk) is all a reformat removes.
 
 The assignment is a record in **Apple's cloud**, tied to the hardware serial.
 Your disk only holds a *local* MDM configuration profile that was handed down

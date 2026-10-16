@@ -19,17 +19,17 @@ This matters for this repo in two ways:
 
 ## Two different layers (don't conflate them)
 
-```
-   ┌─────────────────────────────────────────────────────────┐
-   │  Layer 1 — the MDM protocol (Apple's built-in framework) │
-   │  Standardized, limited, and documented by Apple.         │
-   └─────────────────────────────────────────────────────────┘
-                              │  the admin can use the protocol to install…
-                              ▼
-   ┌─────────────────────────────────────────────────────────┐
-   │  Layer 2 — agents/scripts the admin pushes (run as root) │
-   │  Jamf binary, monitoring tools, EDR, scripts. Few limits.│
-   └─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    L1["<b>Layer 1 — the MDM protocol</b><br/>Apple's built-in framework.<br/>Standardized, limited, documented.<br/><i>Sees: inventory, app list, compliance.<br/>Cannot see: files, keystrokes, browsing, messages.</i>"]
+    L2["<b>Layer 2 — agents / scripts the admin pushes</b><br/>Jamf binary, monitoring tools, EDR, scripts.<br/>Run as <b>root</b> — few limits.<br/><i>CAN see: files, keystrokes, screen, web, network.</i>"]
+
+    L1 -->|the admin uses the protocol to silently install…| L2
+
+    classDef limited fill:#d1f0d1,stroke:#2e7d32,color:#000;
+    classDef broad fill:#fde0e0,stroke:#c62828,color:#000;
+    class L1 limited;
+    class L2 broad;
 ```
 
 Almost every "can they see X?" argument online is really an argument about

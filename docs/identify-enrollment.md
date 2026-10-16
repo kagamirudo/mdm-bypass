@@ -52,15 +52,27 @@ system_profiler SPHardwareDataType | awk -F': ' '/Serial Number/{print $2}'
 
 ## Decision tree
 
-```
-Is "Enrolled via DEP: Yes"?
-├── Yes → ADE/DEP. Local removal won't stick across a wipe.
-│         Get the device released from ABM/ASM (seller or Apple w/ proof).
-│         See supported-removal.md → "Device Enrollment (ADE / DEP)".
-└── No  → Is "MDM enrollment: Yes"?
-          ├── Yes → User/manual enrollment. Remove the profile locally.
-          │          See supported-removal.md → "User/manual enrollment".
-          └── No  → Already unmanaged. Done.
+```mermaid
+flowchart TD
+    Start["Run: profiles status -type enrollment"]
+    Q1{"Enrolled via DEP: Yes?"}
+    Q2{"MDM enrollment: Yes?"}
+    ADE["<b>ADE / DEP</b><br/>Local removal won't stick across a wipe.<br/>Get the serial released from ABM/ASM<br/>(seller, or Apple with proof of purchase).<br/>→ supported-removal.md · escalation-playbook.md"]
+    User["<b>User / manual enrollment</b><br/>Remove the profile locally.<br/>→ supported-removal.md"]
+    Clean["<b>Already unmanaged</b> — nothing to do ✅"]
+
+    Start --> Q1
+    Q1 -->|Yes| ADE
+    Q1 -->|No| Q2
+    Q2 -->|Yes| User
+    Q2 -->|No| Clean
+
+    classDef hard fill:#fde0e0,stroke:#c62828,color:#000;
+    classDef easy fill:#fff6d1,stroke:#f9a825,color:#000;
+    classDef done fill:#d1f0d1,stroke:#2e7d32,color:#000;
+    class ADE hard;
+    class User easy;
+    class Clean done;
 ```
 
 Run [`../scripts/mdm-status.sh`](../scripts/mdm-status.sh) to collect all of
