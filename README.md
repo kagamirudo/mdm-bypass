@@ -13,6 +13,14 @@ Management) enrollment from a Mac you own**.
 > organization's IT/offboarding process instead. See
 > [`docs/legal-and-ethics.md`](docs/legal-and-ethics.md).
 
+## Start here: how MDM actually works
+
+If you only read one doc, read [`docs/how-mdm-works.md`](docs/how-mdm-works.md).
+It explains the mechanism — the four parties, the pull-based APNs protocol, and
+the two enrollment types — and then derives *why* each removal method works,
+fails, or is only temporary. Everything else in this repo is a consequence of
+it.
+
 ## Why "bypass" is usually the wrong word
 
 For most owned Macs, MDM can be removed cleanly through supported paths — you
@@ -47,7 +55,12 @@ fully leave macOS behind. See
 
 | Path | Contents |
 |------|----------|
-| [`docs/`](docs/) | The actual research: how to tell what kind of enrollment you have, supported removal paths, and the ethics/legal framing. |
+| [`docs/how-mdm-works.md`](docs/how-mdm-works.md) | **The mechanism.** How Apple MDM works and why removal works where it does. Read first. |
+| [`docs/identify-enrollment.md`](docs/identify-enrollment.md) | Read-only commands + decision tree to classify your enrollment. |
+| [`docs/supported-removal.md`](docs/supported-removal.md) | The supported removal paths for each enrollment type. |
+| [`docs/why-reformat-doesnt-work.md`](docs/why-reformat-doesnt-work.md) | Why reformatting doesn't remove ADE/DEP management. |
+| [`docs/linux-does-not-remove-mdm.md`](docs/linux-does-not-remove-mdm.md) | Why installing Linux hides but doesn't remove MDM. |
+| [`docs/legal-and-ethics.md`](docs/legal-and-ethics.md) | Scope: owner-authorized removal only. |
 | [`scripts/`](scripts/) | Read-only diagnostic helpers (no changes to your system). |
 
 ## Quick start
