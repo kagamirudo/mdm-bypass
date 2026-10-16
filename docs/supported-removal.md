@@ -76,6 +76,9 @@ The supported fixes, in order:
    If you bought it recently and can't get it released, the honest move is to
    return it as "sold while still MDM-enrolled."
 
+> For the exact steps and copy-paste message templates to get a seller or Apple
+> to release the serial, see [`escalation-playbook.md`](escalation-playbook.md).
+
 ### What about Activation Lock?
 
 Separate from MDM. If the Mac also shows **Activation Lock**, that's tied to a
