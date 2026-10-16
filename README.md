@@ -61,6 +61,7 @@ fully leave macOS behind. See
 | [`docs/escalation-playbook.md`](docs/escalation-playbook.md) | Step-by-step + copy-paste templates to get an ADE/DEP serial released at the source. |
 | [`docs/why-reformat-doesnt-work.md`](docs/why-reformat-doesnt-work.md) | Why reformatting doesn't remove ADE/DEP management. |
 | [`docs/linux-does-not-remove-mdm.md`](docs/linux-does-not-remove-mdm.md) | Why installing Linux hides but doesn't remove MDM. |
+| [`docs/what-can-mdm-see.md`](docs/what-can-mdm-see.md) | What IT can actually see on a managed Mac (protocol vs. installed agents). |
 | [`docs/legal-and-ethics.md`](docs/legal-and-ethics.md) | Scope: owner-authorized removal only. |
 | [`scripts/`](scripts/) | Read-only diagnostic helpers (no changes to your system). |
 
