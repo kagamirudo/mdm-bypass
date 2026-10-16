@@ -56,6 +56,7 @@ fully leave macOS behind. See
 | Path | Contents |
 |------|----------|
 | [`docs/how-mdm-works.md`](docs/how-mdm-works.md) | **The mechanism.** How Apple MDM works and why removal works where it does. Read first. |
+| [`docs/bypass-vs-removal.md`](docs/bypass-vs-removal.md) | **Bypass vs. "fully bypass" vs. no MDM** — the three states compared, and why "fully bypass" is a myth for ADE/DEP. |
 | [`docs/identify-enrollment.md`](docs/identify-enrollment.md) | Read-only commands + decision tree to classify your enrollment. |
 | [`docs/supported-removal.md`](docs/supported-removal.md) | The supported removal paths for each enrollment type. |
 | [`docs/escalation-playbook.md`](docs/escalation-playbook.md) | Step-by-step + copy-paste templates to get an ADE/DEP serial released at the source. |
