@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Diagnostic output that may contain serials / identifiers — never commit
+/out/
+*.mdm-report.txt
+profiles-dump.*
+
+# Editor
+.vscode/
+.idea/
+*.swp
