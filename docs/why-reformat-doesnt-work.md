@@ -9,6 +9,7 @@ complete removal, because the enrollment doesn't live on the drive.
 ## Where the enrollment actually lives
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": true, "wrappingWidth": 500}}}%%
 flowchart LR
     Serial["🔑 Your Mac's<br/>SERIAL NUMBER"]
     Org["🏢 An organization in<br/>Apple Business Manager (ABM)<br/>/ Apple School Manager (ASM)"]

@@ -16,6 +16,7 @@ consequences of what's below.
 ## 1. The four parties
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": true, "wrappingWidth": 500}}}%%
 flowchart LR
     Mac["🖥️ Your Mac<br/>(holds only the local<br/>enrollment profile)"]
 
@@ -143,6 +144,7 @@ pre-assigned.
   the copy changes nothing about the decision.
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": true, "wrappingWidth": 500}}}%%
 flowchart LR
     Serial["🔑 Serial number<br/>in your Mac's hardware<br/><i>survives OS wipes,<br/>Linux installs, firmware</i>"]
     ABM["📒 ABM / ASM<br/>ownership ledger"]

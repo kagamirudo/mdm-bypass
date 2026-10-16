@@ -53,6 +53,7 @@ system_profiler SPHardwareDataType | awk -F': ' '/Serial Number/{print $2}'
 ## Decision tree
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": true, "wrappingWidth": 500}}}%%
 flowchart TD
     Start["Run: profiles status -type enrollment"]
     Q1{"Enrolled via DEP: Yes?"}

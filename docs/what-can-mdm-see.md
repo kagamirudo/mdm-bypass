@@ -20,11 +20,12 @@ This matters for this repo in two ways:
 ## Two different layers (don't conflate them)
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": true, "wrappingWidth": 600}}}%%
 flowchart TD
-    L1["<b>Layer 1 — the MDM protocol</b><br/>Apple's built-in framework.<br/>Standardized, limited, documented.<br/><i>Sees: inventory, app list, compliance.<br/>Cannot see: files, keystrokes, browsing, messages.</i>"]
-    L2["<b>Layer 2 — agents / scripts the admin pushes</b><br/>Jamf binary, monitoring tools, EDR, scripts.<br/>Run as <b>root</b> — few limits.<br/><i>CAN see: files, keystrokes, screen, web, network.</i>"]
+    L1["<b>Layer 1 — the MDM protocol &nbsp;(Apple's built-in framework)</b><br/>Standardized, limited, documented by Apple.<br/><br/>✅ Sees: device inventory · installed-app list · compliance posture<br/>❌ Cannot see: file contents · keystrokes · browsing history · messages"]
+    L2["<b>Layer 2 — agents / scripts the admin pushes (run as root)</b><br/>Jamf binary · monitoring &amp; DLP tools · EDR · arbitrary scripts — few limits.<br/><br/>⚠️ CAN see: file contents · keystrokes · the screen · web &amp; network activity"]
 
-    L1 -->|the admin uses the protocol to silently install…| L2
+    L1 -->|"the admin uses the protocol to silently install…"| L2
 
     classDef limited fill:#d1f0d1,stroke:#2e7d32,color:#000;
     classDef broad fill:#fde0e0,stroke:#c62828,color:#000;
