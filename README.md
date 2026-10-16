@@ -32,6 +32,12 @@ If the device is in ADE and you cannot get the source record removed, the
 the right fix is a paper trail proving ownership. See
 [`docs/supported-removal.md`](docs/supported-removal.md#device-enrollment-ade--dep).
 
+**"But if I reformat, it comes back!"** Correct — for an ADE/DEP device that's
+expected, because the enrollment is a server-side record keyed to your serial,
+not something on the disk. [`docs/why-reformat-doesnt-work.md`](docs/why-reformat-doesnt-work.md)
+explains the re-enrollment loop, why the "skip Wi-Fi"/host-blocking tricks are
+temporary, and what the single permanent removal step actually is.
+
 ## Layout
 
 | Path | Contents |
