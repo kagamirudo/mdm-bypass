@@ -38,6 +38,11 @@ not something on the disk. [`docs/why-reformat-doesnt-work.md`](docs/why-reforma
 explains the re-enrollment loop, why the "skip Wi-Fi"/host-blocking tricks are
 temporary, and what the single permanent removal step actually is.
 
+**"What if I install Linux instead?"** That hides management (macOS never boots
+to check in) but does not remove it — and on Apple silicon Linux can't even
+fully leave macOS behind. See
+[`docs/linux-does-not-remove-mdm.md`](docs/linux-does-not-remove-mdm.md).
+
 ## Layout
 
 | Path | Contents |
